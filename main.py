@@ -21,5 +21,5 @@ if __name__ == '__main__':
         time.sleep(5)
         httpd.serve()
     except KeyboardInterrupt as stop:
-        print(f'[{time.asctime()}] - Server stopped ({stop}).')
+        print(f'[{time.asctime()}] - Server stopped.')
         httpd.serve_end()

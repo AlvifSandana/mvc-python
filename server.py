@@ -6,7 +6,7 @@ by Alvif Sandana Mahardika
 import socket
 import json
 import time
-from app.controller.controller_mhs import ControllerMahasiswa
+from app.controller.controller_students import ControllerStudents
 
 
 class MyServer:
@@ -62,14 +62,14 @@ class MyServer:
                 # kirim HTTP response
                 response = f"HTTP/1.0 200 OK\n\n{html_ren}"
             elif path[1] == '/about':
-                with open('app/view/tentang.html', 'r') as h:
+                with open('app/view/about.html', 'r') as h:
                     html_ren = h.read()
 
                 # kirim HTTP response
                 response = f"HTTP/1.0 200 OK\n\n{html_ren}"
 
             elif path[1] == '/mahasiswa':
-                maha = ControllerMahasiswa()
+                maha = ControllerStudents()
                 response = f"HTTP/1.0 200 OK\n\n{maha.index()}"
             else:
                 with open('app/view/404.html', 'r') as nf:

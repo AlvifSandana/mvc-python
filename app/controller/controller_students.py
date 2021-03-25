@@ -1,8 +1,8 @@
 from jinja2 import Template
-from ..model.model_mhs import ModelMahasiswa
+from ..model.model_students import ModelMahasiswa
 
 
-class ControllerMahasiswa:
+class ControllerStudents:
     def index(self):
         try:
             mdl = ModelMahasiswa()
@@ -10,7 +10,7 @@ class ControllerMahasiswa:
             html = ""
             for d in data:
                 html += f"<tr><td>{d['nim']}</td><td>{d['nama']}</td><td>{d['angkatan']}</td></tr>"
-            with open('app/view/listmhs.html', 'r') as h:
+            with open('app/view/liststudents.html', 'r') as h:
                 tmp = h.read()
             templat_html = Template(tmp)
             rendered = templat_html.render(listmhs=html)

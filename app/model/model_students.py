@@ -1,7 +1,7 @@
 import json
 
 
-class ModelMahasiswa:
+class ModelStudents:
     def read(self):
         try:
             with open('db/data.json') as f:

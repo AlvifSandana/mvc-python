@@ -1,11 +1,11 @@
 from jinja2 import Template
-from ..model.model_students import ModelMahasiswa
+from ..model.model_students import ModelStudents
 
 
 class ControllerStudents:
     def index(self):
         try:
-            mdl = ModelMahasiswa()
+            mdl = ModelStudents()
             data = mdl.read()
             html = ""
             for d in data:

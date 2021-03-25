@@ -10,7 +10,7 @@ class ModelMahasiswa:
         except FileNotFoundError as FNF:
             data = {'message': f'File not found. ({FNF})'}
         except Exception as e:
-            data = {'message' : f'{e}'}
+            data = {'message': f'{e}'}
         return data
 
     def create(self):

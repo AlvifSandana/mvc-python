@@ -28,5 +28,9 @@ class ControllerStudents:
         except Exception as e:
             print(e)
 
-    def addstudent(self, data):
-        pass
+    def addstudent(self, postdata):
+        try:
+            mdl = ModelStudents()
+            mdl.create(postdata)
+        except Exception as e:
+            print(e)

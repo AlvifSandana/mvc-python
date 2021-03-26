@@ -51,11 +51,11 @@ class MyServer:
                 response = f"HTTP/1.0 200 OK\n\n{student.index()}"
             elif path[0] == 'GET' and path[1] == '/mahasiswa/add':
                 # send HTTP response
-                response = f"HTTP/1.0 200 OK\n\n{student.pageaddstudent('')}"
+                response = f"HTTP/1.0 200 OK\n\n{student.pageaddstudent()}"
             elif path[0] == 'POST' and path[1] == '/mahasiswa/add':
+                student.addstudent(path[len(path) - 1])
                 # send HTTP response
                 response = f"HTTP/1.0 200 OK\n\n{student.index()}"
-                print(path[len(path) - 1])
             else:
                 with open('app/view/404.html', 'r') as nf:
                     html_ren = nf.read()

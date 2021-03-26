@@ -6,7 +6,7 @@ class ControllerStudents:
     def index(self):
         try:
             mdl = ModelStudents()
-            data = mdl.read()
+            data = mdl.read_all()
             html = ""
             for d in data:
                 html += f"<tr><td>{d['nim']}</td><td>{d['nama']}</td><td>{d['angkatan']}</td></tr>"
@@ -18,7 +18,7 @@ class ControllerStudents:
         except Exception as e:
             print(e)
 
-    def pageaddstudent(self, data):
+    def pageaddstudent(self):
         try:
             with open('app/view/addnewstudent.html', 'r') as rf:
                 tmp = rf.read()
@@ -27,3 +27,6 @@ class ControllerStudents:
             return rendered
         except Exception as e:
             print(e)
+
+    def addstudent(self, data):
+        pass

@@ -2,7 +2,7 @@ import json
 
 
 class ModelStudents:
-    def read(self):
+    def read_all(self):
         try:
             with open('db/data.json') as f:
                 data_raw = json.load(f)
@@ -13,8 +13,23 @@ class ModelStudents:
             data = {'message': f'{e}'}
         return data
 
-    def create(self):
+    def read_by_nim(self, nim):
         pass
+
+    def create(self, input_data):
+        try:
+            with open('db/data.json') as f:
+                data_raw = json.load(f)
+                data = data_raw['mahasiswa']
+            data.append({
+                'nim': input_data['nim'],
+                'nama': input_data['nama'],
+                'angkatan': input_data['angkatan'],
+            })
+            print('data successfully added!')
+        except Exception as e:
+            print(e)
+
 
     def update(self, data):
         pass

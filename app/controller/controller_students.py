@@ -16,5 +16,14 @@ class ControllerStudents:
             rendered = templat_html.render(listmhs=html)
             return rendered
         except Exception as e:
-            error = e
-            print(error)
+            print(e)
+
+    def pageaddstudent(self, data):
+        try:
+            with open('app/view/addnewstudent.html', 'r') as rf:
+                tmp = rf.read()
+            template = Template(tmp)
+            rendered = template.render()
+            return rendered
+        except Exception as e:
+            print(e)

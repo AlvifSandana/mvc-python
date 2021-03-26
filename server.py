@@ -4,9 +4,11 @@ Modul server.py
 by Alvif Sandana Mahardika
 """
 import socket
-import json
 import time
+
+from app.controller.controller_about import ControllerAbout
 from app.controller.controller_students import ControllerStudents
+from app.controller.controller_dashboard import ControllerDashboard
 
 
 class MyServer:
@@ -22,66 +24,48 @@ class MyServer:
         print(f'[{time.asctime()}] - Listening on port {self.port}')
 
         while True:
-            # Menunggu koneksi dari client
+            # Waiting for client connection
             client_connection, client_address = self.server_socket.accept()
 
-            # Mendapatkan request dari client
+            # get request from client
             request = client_connection.recv(1024).decode()
             print(request)
 
+            # splitting request string for routes handling
             path = request.split(' ')
 
+            # instantiate controller object
+            dashboard = ControllerDashboard()
+            about = ControllerAbout()
+            student = ControllerStudents()
+
+            # handling routes
             if path[1] == '/':
-                # kirim HTTP response
-                # memuat data.json
-                fin = open('db/data.json')
-                content = json.load(fin)
-                fin.close()
-
-                # menyiapkan vavriabel untuk file html
-                html = ''
-
-                # ambil data
-                for d in content['mahasiswa']:
-                    html += f"<tr><td>{d['nim']}</td><td>{d['nama']}</td><td>{d['angkatan']}</td></tr>"
-
-                # gabung menjadi satu
-                html_jadi = f'<html>' \
-                            f'<head><title>JSON</title></head>' \
-                            f'<body>' \
-                            f'<table border="1"><tr><td>NIM</td><td>Nama</td><td>Angkatan</td></tr>{html}</table>' \
-                            f'</body></html>'
-
-                # tulis file html baru
-                with open('app/view/index.html', 'w') as f:
-                    f.write(html_jadi)
-
-                with open('app/view/index.html', 'r') as h:
-                    html_ren = h.read()
-
-                # kirim HTTP response
-                response = f"HTTP/1.0 200 OK\n\n{html_ren}"
+                # send HTTP response
+                response = f"HTTP/1.0 200 OK\n\n{dashboard.index()}"
             elif path[1] == '/about':
-                with open('app/view/about.html', 'r') as h:
-                    html_ren = h.read()
-
-                # kirim HTTP response
-                response = f"HTTP/1.0 200 OK\n\n{html_ren}"
-
+                # send HTTP response
+                response = f"HTTP/1.0 200 OK\n\n{about.index()}"
             elif path[1] == '/mahasiswa':
-                maha = ControllerStudents()
-                response = f"HTTP/1.0 200 OK\n\n{maha.index()}"
+                # send HTTP response
+                response = f"HTTP/1.0 200 OK\n\n{student.index()}"
+            elif path[0] == 'GET' and path[1] == '/mahasiswa/add':
+                # send HTTP response
+                response = f"HTTP/1.0 200 OK\n\n{student.pageaddstudent('')}"
+            elif path[0] == 'POST' and path[1] == '/mahasiswa/add':
+                # send HTTP response
+                response = f"HTTP/1.0 200 OK\n\n{student.index()}"
+                print(path[len(path) - 1])
             else:
                 with open('app/view/404.html', 'r') as nf:
                     html_ren = nf.read()
-
                 response = f"HTTP/1.0 404 Not Found\n\n{html_ren}"
 
-            # kirim respon ke client
+            # send response to client
             client_connection.sendall(response.encode())
             client_connection.close()
 
 
     def serve_end(self):
-        # Menutup socket
+        # close socket
         self.server_socket.close()

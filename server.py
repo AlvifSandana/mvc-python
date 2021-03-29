@@ -1,6 +1,6 @@
 """
 Modul server.py
-23 Marent 2021
+23 Maret 2021
 by Alvif Sandana Mahardika
 """
 import socket
